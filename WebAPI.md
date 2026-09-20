@@ -1,7 +1,14 @@
 ```yaml
 title: Web API
 language_tabs:
-  - shell: Shell  - http: HTTP  - javascript: JavaScript  - ruby: Ruby  - python: Python  - php: PHP  - java: Java  - go: Go
+  - shell: Shell
+  - http: HTTP
+  - javascript: JavaScript
+  - ruby: Ruby
+  - python: Python
+  - php: PHP
+  - java: Java
+  - go: Go
 toc_footers: []
 includes: []
 search: true
@@ -649,7 +656,7 @@ GET /protocol/media/ability
     "ndi": 1,
     "dante": 1,
     "full_ndi": 0,
-    "onvif": 1,
+    "onvif": 1
   }
 }
 ```
@@ -2789,7 +2796,7 @@ GET /mpp/video/ability
         "step": 1,
         "input": 1
       }
-    },
+    }
   ],
   "message": ""
 }
@@ -3059,7 +3066,7 @@ GET /mpp/audio/ability
       "order": -1,
       "show": 1,
       "default": 0
-    },
+    }
   ],
   "message": ""
 }
@@ -3319,7 +3326,7 @@ GET /hdmi/ability
           }
         ]
       }
-    },
+    }
   ],
   "message": ""
 }
@@ -3538,7 +3545,7 @@ GET /pip/ability
       "order": -1,
       "show": 1,
       "default": 0
-    },
+    }
   ],
   "message": ""
 }
@@ -3820,111 +3827,6 @@ GET /protocol/control/ability
 }
 ```
 
-## POST visca general config get
-
-POST /protocol/control/viscaUsual
-
-获取 Visca general config 参数。请求体带 keys 枚举数组，后端按 keys 返对应字段的当前值。
-
-> Body 请求参数
-
-```json
-{
-    "keys": [
-        "Visca_addr"
-    ]
-}
-```
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "code": 200,
-  "data": [
-    {"key": "Visca_addr", "value": 1, "enabled": true}
-  ],
-  "message": ""
-}
-```
-
-## POST visca general config set
-
-POST /protocol/control/viscaUsual
-
-设置 Visca general config 参数。支持一次下发多组 key + value。
-
-> Body 请求参数
-
-```json
-{
-    "id": 0,
-    "data": [
-        {
-            "key": "Visca_addr",
-            "value": 1
-        },
-        {
-            "key": "Visca_addr",
-            "value": 2
-        }
-    ]
-}
-```
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "code": 200,
-  "data": "ok",
-  "message": ""
-}
-```
-
-## GET visca general config ability
-
-GET /protocol/control/viscaUsual/ability
-
-获取 visca general config 能力集。data 字段为各可配置项的 component/span/order/show/default/feature（options 列表）。
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "code": 200,
-  "data": [
-    {
-      "key": "Visca_addr",
-      "component": "Select",
-      "span": 8,
-      "order": -1,
-      "show": 1,
-      "default": 1,
-      "feature": {
-        "options": [
-          {"label": "0", "value": 0},
-          {"label": "1", "value": 1},
-          {"label": "2", "value": 2},
-          {"label": "3", "value": 3},
-          {"label": "4", "value": 4},
-          {"label": "5", "value": 5},
-          {"label": "6", "value": 6},
-          {"label": "7", "value": 7}
-        ]
-      }
-    }
-  ],
-  "message": ""
-}
-```
-
 ## POST visca passthrough get
 
 POST /protocol/control/visca
@@ -3940,7 +3842,8 @@ POST /protocol/control/visca
         "enable",
         "protocol_type",
         "work_mode",
-        "address"
+        "address",
+        "Visca_addr"
     ]
 }
 ```
@@ -3957,7 +3860,8 @@ POST /protocol/control/visca
     {"key": "enable", "value": true, "enabled": true},
     {"key": "protocol_type", "value": 1, "enabled": true},
     {"key": "work_mode", "value": 1, "enabled": true},
-    {"key": "address", "value": "192.168.0.1", "enabled": true}
+    {"key": "address", "value": "192.168.0.1", "enabled": true},
+    {"key": "Visca_addr", "value": 1, "enabled": true}
   ],
   "message": ""
 }
@@ -4053,6 +3957,26 @@ GET /protocol/control/visca/ability
         "min": 0,
         "max": 7,
         "step": 1
+      }
+    },
+    {
+      "key": "Visca_addr",
+      "component": "Select",
+      "span": 8,
+      "order": -1,
+      "show": 1,
+      "default": 1,
+      "feature": {
+        "options": [
+          {"label": "0", "value": 0},
+          {"label": "1", "value": 1},
+          {"label": "2", "value": 2},
+          {"label": "3", "value": 3},
+          {"label": "4", "value": 4},
+          {"label": "5", "value": 5},
+          {"label": "6", "value": 6},
+          {"label": "7", "value": 7}
+        ]
       }
     },
     {
@@ -6532,67 +6456,6 @@ POST /isp/set
 
 ### 返回数据结构
 
-## POST Preset Scenes
-
-POST /isp/point
-
-Preset operation
-
-> Body 请求参数
-
-```json
-{
-    "method": "recall",
-    "id": -3
-}
-```
-
-### 请求参数
-
-| 名称  | 位置  | 类型  | 必选  | 中文名 | 说明  |
-| --- | --- | --- | --- | --- | --- |
-| body | body | object | 是   |     | none |
-| » method | body | string | 是   |     | Preset operation method |
-| » id | body | integer | 是   |     | Preset ID |
-
-#### 枚举值
-
-| 属性  | 值   |
-| --- | --- |
-| » method | recall |
-| » id | -1  |
-| » id | -2  |
-| » id | -3  |
-| » id | -250 |
-
-> 返回示例
-
-> 200 Response
-
-```json
-{
-  "code": 0,
-  "data": "string",
-  "message": "string"
-}
-```
-
-### 返回结果
-
-| 状态码 | 状态码含义 | 说明  | 数据模型 |
-| --- | --- | --- | --- |
-| 200 | [OK](https://tools.ietf.org/html/rfc7231#section-6.3.1) | none | Inline |
-
-### 返回数据结构
-
-状态码 **200**
-
-| 名称  | 类型  | 必选  | 约束  | 中文名 | 说明  |
-| --- | --- | --- | --- | --- | --- |
-| » code | integer | true | none |     | none |
-| » data | string | true | none |     | none |
-| » message | string | true | none |     | none |
-
 ## GET custom isp style
 
 GET /custom-isp-style/get
@@ -7898,6 +7761,7 @@ Stream Type
   "enable": true,
   "port": 1,
   "protocolType": true,
+  "viscaAddr": 1,
   "workMode": true
 }
 ```
@@ -7910,6 +7774,7 @@ Stream Type
 | enable | boolean | true | none | Enable | none |
 | port | integer | true | none | Port | none |
 | protocolType | boolean | true | none | Communication Protocol | true->TCP, false->UDP |
+| viscaAddr | integer | true | none | Visca Address | none |
 | workMode | boolean | true | none | Communication Mode | true->Server, false->Client |
 
 <h2 id="tocS_Input Serial Port">Input Serial Port</h2>
@@ -8069,25 +7934,6 @@ Stream Type
 | --- | --- | --- | --- | --- | --- |
 | kxwell_addr | integer | true | none |     | none |
 
-<h2 id="tocS_ViscaUsual">ViscaUsual</h2>
-
-<a id="schemaviscausual"></a>
-<a id="schema_ViscaUsual"></a>
-<a id="tocSviscausual"></a>
-<a id="tocsviscausual"></a>
-
-```json
-{
-  "Visca_addr": 1
-}
-```
-
-### 属性
-
-| 名称  | 类型  | 必选  | 约束  | 中文名 | 说明  |
-| --- | --- | --- | --- | --- | --- |
-| Visca_addr | integer | true | none | Visca Address | none |
-
 <h2 id="tocS_Visca透传">Visca透传</h2>
 
 <a id="schemavisca透传"></a>
@@ -8101,6 +7947,7 @@ Stream Type
   "enable": true,
   "port": 1,
   "protocolType": true,
+  "viscaAddr": 1,
   "workMode": true
 }
 ```
@@ -8113,6 +7960,7 @@ Stream Type
 | enable | boolean | true | none | 启用  | none |
 | port | integer | true | none | 端口  | none |
 | protocolType | boolean | true | none | 通信协议 | true->TCP, false->UDP |
+| viscaAddr | integer | true | none | Visca 地址 | none |
 | workMode | boolean | true | none | 通信模式 | true->服务端, false->客户端 |
 
 <h2 id="tocS_Visca Over IP">Visca Over IP</h2>
